@@ -3,6 +3,7 @@
     <button class="btn" @click="toggleDialog">Open Dialog</button>
     <ui-dialog
       :show="showDialog"
+      ref="dialog"
       class="fixed top-10 left-1/2 transform -translate-x-1/2"
     >
       <article class="space-y-4">
@@ -19,16 +20,22 @@
 
 <script>
 import { ref } from "@nuxtjs/composition-api";
+import { onClickOutside } from "@vueuse/core";
 export default {
   name: "IndexPage",
   setup() {
+    const dialog = ref(null);
     const showDialog = ref(false);
 
     function toggleDialog() {
       showDialog.value = !showDialog.value;
     }
 
-    return { showDialog, toggleDialog };
+    onClickOutside(dialog, () => {
+      showDialog.value = false;
+    });
+
+    return { dialog, showDialog, toggleDialog };
   },
 };
 </script>

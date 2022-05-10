@@ -18,15 +18,17 @@
 </template>
 
 <script>
+import { ref } from "@nuxtjs/composition-api";
 export default {
   name: "IndexPage",
-  data() {
-    return { showDialog: false };
-  },
-  methods: {
-    toggleDialog() {
-      this.showDialog = !this.showDialog;
-    },
+  setup() {
+    const showDialog = ref(false);
+
+    function toggleDialog() {
+      showDialog.value = !showDialog.value;
+    }
+
+    return { showDialog, toggleDialog };
   },
 };
 </script>
